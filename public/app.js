@@ -26,7 +26,7 @@ if (location.pathname.endsWith('chat.html')) {
   document.getElementById('codeDisplay').value = room;
 
   let ws, aesKey;
-  let username = mode === 'create' ? 'Alpha' : 'Delta'; // ✅ ตั้งชื่อฝั่งตัวเอง
+  let username = mode === 'create' ? 'Alpha' : 'Delta';
 
   async function deriveKey(pass) {
     const enc = new TextEncoder();
@@ -48,7 +48,10 @@ if (location.pathname.endsWith('chat.html')) {
 
   async function init() {
     aesKey = await deriveKey(room);
-    ws = new WebSocket(`ws://${location.host}`);
+
+    // ✅ แก้ให้รองรับ wss:// สำหรับ production
+    const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+    ws = new WebSocket(`${protocol}://${location.host}`);
 
     ws.onopen = () => {
       ws.send(JSON.stringify({ type: mode, room }));
@@ -63,8 +66,6 @@ if (location.pathname.endsWith('chat.html')) {
           const iv = Uint8Array.from(atob(msg.iv), c => c.charCodeAt(0));
           const ct = Uint8Array.from(atob(msg.ct), c => c.charCodeAt(0));
           const text = await decrypt(iv, ct);
-
-          // ✅ ฝั่งตรงข้ามแสดงชื่อที่ตรงข้ามกับเรา
           const peerName = username === 'Alpha' ? 'Delta' : 'Alpha';
           addMessage(peerName, text);
         } else if (msg.type === 'peer-disconnected') {
@@ -74,7 +75,7 @@ if (location.pathname.endsWith('chat.html')) {
     };
 
     ws.onclose = () => {
-      console.log("WebSocket closed");
+      addMessage('System', 'Disconnected from server.');
     };
   }
 
@@ -90,14 +91,14 @@ if (location.pathname.endsWith('chat.html')) {
   async function sendMessage() {
     const input = document.getElementById('messageInput');
     const text = input.value.trim();
-    if (!text) return;
+    if (!text || !ws || ws.readyState !== WebSocket.OPEN) return;
     const { iv, ct } = await encrypt(text);
     ws.send(JSON.stringify({
       type: 'message',
       iv: btoa(String.fromCharCode(...iv)),
       ct: btoa(String.fromCharCode(...ct))
     }));
-    addMessage(username, text); // ✅ แสดงชื่อฝั่งตัวเอง
+    addMessage(username, text);
     input.value = '';
   }
 
@@ -106,7 +107,9 @@ if (location.pathname.endsWith('chat.html')) {
   }
 
   function disconnect() {
-    ws.close();
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.close();
+    }
     window.location.href = 'index.html';
   }
 
