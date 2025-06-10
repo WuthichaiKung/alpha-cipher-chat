@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat | ALPHA-CIPHER</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="chat-header">
+    <input type="text" id="codeDisplay" readonly />
+    <button onclick="copyCode()">📋</button>
+    <button onclick="disconnect()" class="danger">Disconnect</button>
+  </div>
+  <div id="chatWindow" class="chat-window"></div>
+  <div class="chat-input">
+    <input type="text" id="messageInput" placeholder="Type a message..." />
+    <button onclick="sendMessage()">➤</button>
+    <input type="file" id="fileInput" multiple />
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
