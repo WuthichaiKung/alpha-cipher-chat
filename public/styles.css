@@ -70,10 +70,6 @@ button {
   color: white;
 }
 
-.chat-input input[type=file] {
-  margin-left: 10px;
-}
-
 .danger {
   background: #dc3545;
   color: white;
