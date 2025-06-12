@@ -29,6 +29,7 @@ body.index-room-page .container {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding-top: 40px; /* ขยับขึ้นจากตรงกลางเล็กน้อย */
 }
 
 /* ========= INPUT WRAPPER ========= */
