@@ -8,33 +8,31 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <!-- Header: Room Code + ปุ่ม -->
-    <div class="chat-header">
-      <input type="text" id="codeDisplay" readonly placeholder="Room Code" />
-      <button onclick="copyCode()" title="Copy room code">📋</button>
-      <button onclick="disconnect()" class="danger" title="Leave chat">Disconnect</button>
+  <!-- Header: Room Code + ปุ่ม -->
+  <div class="chat-header">
+    <input type="text" id="codeDisplay" readonly placeholder="Room Code" />
+    <button onclick="copyCode()" title="Copy room code">📋</button>
+    <button onclick="disconnect()" class="danger" title="Leave chat">Disconnect</button>
+  </div>
+
+  <!-- Container: Chat + Typing + Input -->
+  <div class="chat-container">
+    <div id="chatWindow" class="chat-window"></div>
+
+    <!-- Typing indicator -->
+    <div id="typingIndicator" class="typing-container" style="display: none;">
+      <span>The other person is typing  </span>
+      <div class="balls">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
 
-    <!-- Container: Chat + Typing + Input -->
-    <div class="chat-container">
-      <div id="chatWindow" class="chat-window"></div>
-
-      <!-- Typing indicator -->
-      <div id="typingIndicator" class="typing-container" style="display: none;">
-        <span>The other person is typing</span>
-        <div class="balls">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-
-      <!-- Chat input -->
-      <div class="chat-input">
-        <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off" />
-        <button onclick="sendMessage()" title="Send message">➔</button>
-      </div>
+    <!-- Chat input -->
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off" />
+      <button onclick="sendMessage()" title="Send message">➔</button>
     </div>
   </div>
 
