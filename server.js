@@ -20,7 +20,10 @@ wss.on('connection', (ws) => {
         if (msg.type === 'create') {
           if (!rooms.has(roomCode)) {
             rooms.set(roomCode, new Set());
-            console.log(`Room ${roomCode} created.`);
+
+                // ✅ log เวลา + ห้อง
+            console.log(`[${new Date().toLocaleTimeString()}] Room ${roomCode} created.`);
+
           }
         } else if (msg.type === 'join') {
           if (!rooms.has(roomCode)) {
