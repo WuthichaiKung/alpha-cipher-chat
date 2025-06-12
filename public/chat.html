@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chat | ALPHA-CIPHER</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Header: Room Code + ปุ่ม -->
   <div class="chat-header">
-    <input type="text" id="codeDisplay" readonly />
-    <button onclick="copyCode()">📋</button>
-    <button onclick="disconnect()" class="danger">Disconnect</button>
+    <input type="text" id="codeDisplay" readonly placeholder="Room Code" />
+    <button onclick="copyCode()" title="Copy room code">📋</button>
+    <button onclick="disconnect()" class="danger" title="Leave chat">Disconnect</button>
   </div>
 
+  <!-- Container: Chat + Typing + Input -->
   <div class="chat-container">
     <div id="chatWindow" class="chat-window"></div>
 
     <!-- Typing indicator -->
     <div id="typingIndicator" class="typing-container" style="display: none;">
-      <span>คู่สนทนากำลังพิม </span>
+      <span>The other person is typing  </span>
       <div class="balls">
         <div></div>
         <div></div>
@@ -25,9 +28,10 @@
       </div>
     </div>
 
+    <!-- Chat input -->
     <div class="chat-input">
-      <input type="text" id="messageInput" placeholder="Type a message..." />
-      <button onclick="sendMessage()">➔</button>
+      <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off" />
+      <button onclick="sendMessage()" title="Send message">➔</button>
     </div>
   </div>
 
