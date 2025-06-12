@@ -12,20 +12,22 @@
     <button onclick="disconnect()" class="danger">Disconnect</button>
   </div>
 
-  <!-- 👇 กล่องครอบที่ต้องใส่เพื่อจัด overlay -->
   <div class="chat-container">
     <div id="chatWindow" class="chat-window"></div>
 
-    <!-- Typing indicator (จะลอยอยู่เหนือ input) -->
-    <div id="typingIndicator" class="balls" style="display: none;">
-      <div></div>
-      <div></div>
-      <div></div>
+    <!-- Typing indicator -->
+    <div id="typingIndicator" class="typing-container" style="display: none;">
+      <span>คู่สนทนากำลังพิม</span>
+      <div class="balls">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
 
     <div class="chat-input">
       <input type="text" id="messageInput" placeholder="Type a message..." />
-      <button onclick="sendMessage()">➤</button>
+      <button onclick="sendMessage()">➔</button>
     </div>
   </div>
 
