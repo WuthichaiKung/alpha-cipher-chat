@@ -1,18 +1,19 @@
 /* ========= GENERAL ========= */
-body {
-  font-family: sans-serif;
-  background: #111;
-  color: #eee;
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  min-height: 100vh;
+  background: #111;
+  color: #eee;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;       /* ✅ ใช้ height แทน min-height */
   text-align: center;
   padding: 20px;
 }
