@@ -12,15 +12,19 @@ body {
   margin-top: 20vh;
 }
 
-/* ========= INPUT ========= */
-div {
+/* ========= INPUT WRAPPER ========= */
+.container .input-wrapper {
+  width: 60%;
+  margin: 0 auto;
   position: relative;
+  display: inline-block;
 }
 
-input[type=text],
-input {
+/* ========= INPUT ========= */
+.input-wrapper input[type=text] {
   padding: 10px;
-  width: 60%;
+  width: 100%;
+  box-sizing: border-box;
   border-radius: 5px;
   border: none;
   margin: 5px 0;
@@ -28,52 +32,51 @@ input {
   font-size: inherit;
   font-family: inherit;
   background-color: hsl(236, 32%, 26%);
-  border: 1px solid transparent;
   transition: background-color 0.3s ease-in-out;
 }
 
-input:focus {
+.input-wrapper input:focus {
   outline: none;
 }
 
-input::placeholder {
+.input-wrapper input::placeholder {
   color: hsla(0, 0%, 100%, 0.6);
 }
 
 /* ===== Input Border Animation ===== */
-span {
+.input-wrapper span {
   position: absolute;
   background-color: #3cefff;
   transition: transform 0.5s ease;
 }
 
-.bottom,
-.top {
+.input-wrapper .bottom,
+.input-wrapper .top {
   height: 1px;
   left: 0;
   right: 0;
   transform: scaleX(0);
 }
 
-.left,
-.right {
+.input-wrapper .left,
+.input-wrapper .right {
   width: 1px;
   top: 0;
   bottom: 0;
   transform: scaleY(0);
 }
 
-.bottom { bottom: 0; transform-origin: bottom right; }
-input:focus ~ .bottom { transform-origin: bottom left; transform: scaleX(1); }
+.input-wrapper .bottom { bottom: 0; transform-origin: bottom right; }
+.input-wrapper input:focus ~ .bottom { transform-origin: bottom left; transform: scaleX(1); }
 
-.right { right: 0; transform-origin: top right; }
-input:focus ~ .right { transform-origin: bottom right; transform: scaleY(1); }
+.input-wrapper .right { right: 0; transform-origin: top right; }
+.input-wrapper input:focus ~ .right { transform-origin: bottom right; transform: scaleY(1); }
 
-.top { top: 0; transform-origin: top left; }
-input:focus ~ .top { transform-origin: top right; transform: scaleX(1); }
+.input-wrapper .top { top: 0; transform-origin: top left; }
+.input-wrapper input:focus ~ .top { transform-origin: top right; transform: scaleX(1); }
 
-.left { left: 0; transform-origin: bottom left; }
-input:focus ~ .left { transform-origin: top left; transform: scaleY(1); }
+.input-wrapper .left { left: 0; transform-origin: bottom left; }
+.input-wrapper input:focus ~ .left { transform-origin: top left; transform: scaleY(1); }
 
 /* ========= BUTTON ========= */
 button {
@@ -176,10 +179,4 @@ button:hover::before {
       0 0 110px rgba(255, 255, 255, 0.25),
       0 0 100px rgba(255, 255, 255, 0.1);
   }
-}
-
-.container .input-wrapper {
-  width: 60%; /* เท่ากับ input */
-  margin: 0 auto;
-  position: relative;
 }
