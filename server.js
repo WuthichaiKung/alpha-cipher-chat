@@ -12,35 +12,48 @@ wss.on('connection', (ws) => {
   let roomCode = null;
 
   ws.on('message', (data, isBinary) => {
-    if (!roomCode) {
-      try {
-        const msg = JSON.parse(data.toString());
+    try {
+      const msg = JSON.parse(data.toString());
+      if (!roomCode && msg.type && msg.room) {
         roomCode = msg.room;
-        if (!rooms.has(roomCode)) rooms.set(roomCode, new Set());
+
+        if (msg.type === 'create') {
+          if (!rooms.has(roomCode)) {
+            rooms.set(roomCode, new Set());
+            console.log(`Room ${roomCode} created.`);
+          }
+        } else if (msg.type === 'join') {
+          if (!rooms.has(roomCode)) {
+            ws.send(JSON.stringify({ type: 'error', message: 'Room not found.' }));
+            return;
+          }
+        }
+
         rooms.get(roomCode).add(ws);
 
-        // แจ้งให้ทั้ง 2 ฝั่งรู้ว่าเชื่อมต่อแล้ว
         if (rooms.get(roomCode).size >= 2) {
           rooms.get(roomCode).forEach((client) => {
-            client.send(JSON.stringify({ type: 'ready' }));
+            if (client.readyState === client.OPEN) {
+              client.send(JSON.stringify({ type: 'ready' }));
+            }
           });
         }
-      } catch (e) {
-        console.error('Invalid join/create message');
+        return;
       }
-      return;
-    }
 
-    // ส่งข้อความไปยังอีกฝ่าย
-    const peers = rooms.get(roomCode) || new Set();
-    for (const client of peers) {
-      if (client !== ws && client.readyState === client.OPEN) {
-        if (isBinary) {
-          client.send(data, { binary: true });
-        } else {
-          client.send(data.toString());
+      // ส่งข้อความไปยังอีกฝ่าย
+      const peers = rooms.get(roomCode) || new Set();
+      for (const client of peers) {
+        if (client !== ws && client.readyState === client.OPEN) {
+          if (isBinary) {
+            client.send(data, { binary: true });
+          } else {
+            client.send(data.toString());
+          }
         }
       }
+    } catch (e) {
+      console.error('Invalid message received:', e);
     }
   });
 
@@ -48,11 +61,11 @@ wss.on('connection', (ws) => {
     if (!roomCode) return;
     const peers = rooms.get(roomCode);
     if (!peers) return;
+
     peers.delete(ws);
 
-    // ✅ แจ้งอีกฝั่งว่า peer ออก
     for (const client of peers) {
-      if (client !== ws && client.readyState === client.OPEN) {
+      if (client.readyState === client.OPEN) {
         client.send(JSON.stringify({ type: 'peer-disconnected' }));
       }
     }

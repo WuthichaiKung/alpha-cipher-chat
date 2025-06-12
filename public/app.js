@@ -1,5 +1,5 @@
 function generateRoomCode(length = 128) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\\",.<>/?';
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\",.<>/?';
   let code = '';
   for (let i = 0; i < length; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -18,7 +18,6 @@ function createRoom() {
   window.location.href = `chat.html?mode=create&room=${encodeURIComponent(room)}`;
 }
 
-// ==== Chat Page Logic ====
 if (location.pathname.endsWith('chat.html')) {
   const params = new URLSearchParams(location.search);
   const mode = params.get('mode');
@@ -48,8 +47,6 @@ if (location.pathname.endsWith('chat.html')) {
 
   async function init() {
     aesKey = await deriveKey(room);
-
-    // ✅ แก้ให้รองรับ wss:// สำหรับ production
     const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
     ws = new WebSocket(`${protocol}://${location.host}`);
 
@@ -70,6 +67,9 @@ if (location.pathname.endsWith('chat.html')) {
           addMessage(peerName, text);
         } else if (msg.type === 'peer-disconnected') {
           addMessage('System', 'Peer disconnected.');
+        } else if (msg.type === 'error') {
+          alert(msg.message);
+          window.location.href = 'index.html';
         }
       }
     };
