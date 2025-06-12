@@ -1,3 +1,4 @@
+/* ========= GENERAL ========= */
 body {
   font-family: sans-serif;
   background: #111;
@@ -11,28 +12,110 @@ body {
   margin-top: 20vh;
 }
 
-input[type=text] {
+/* ========= INPUT ========= */
+div {
+  position: relative;
+}
+
+input[type=text],
+input {
   padding: 10px;
   width: 60%;
   border-radius: 5px;
   border: none;
   margin: 5px 0;
+  color: white;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: hsl(236, 32%, 26%);
+  border: 1px solid transparent;
+  transition: background-color 0.3s ease-in-out;
 }
 
+input:focus {
+  outline: none;
+}
+
+input::placeholder {
+  color: hsla(0, 0%, 100%, 0.6);
+}
+
+/* ===== Input Border Animation ===== */
+span {
+  position: absolute;
+  background-color: #3cefff;
+  transition: transform 0.5s ease;
+}
+
+.bottom,
+.top {
+  height: 1px;
+  left: 0;
+  right: 0;
+  transform: scaleX(0);
+}
+
+.left,
+.right {
+  width: 1px;
+  top: 0;
+  bottom: 0;
+  transform: scaleY(0);
+}
+
+.bottom { bottom: 0; transform-origin: bottom right; }
+input:focus ~ .bottom { transform-origin: bottom left; transform: scaleX(1); }
+
+.right { right: 0; transform-origin: top right; }
+input:focus ~ .right { transform-origin: bottom right; transform: scaleY(1); }
+
+.top { top: 0; transform-origin: top left; }
+input:focus ~ .top { transform-origin: top right; transform: scaleX(1); }
+
+.left { left: 0; transform-origin: bottom left; }
+input:focus ~ .left { transform-origin: top left; transform: scaleY(1); }
+
+/* ========= BUTTON ========= */
 button {
+  z-index: 1;
+  position: relative;
+  font-size: 1rem;
+  font-family: inherit;
+  color: white;
   padding: 10px 20px;
   margin: 5px;
   border: none;
   border-radius: 5px;
+  background-color: hsl(236, 32%, 26%);
+  overflow: hidden;
+  transition: color 0.4s ease-in-out;
+}
+
+button::before {
+  content: '';
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: #3cefff;
+  transform-origin: center;
+  transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
+  transition: transform 0.45s ease-in-out;
+}
+
+button:hover {
   cursor: pointer;
+  color: #161616;
 }
 
-.buttons button {
-  background: #28a745;
-  color: white;
-  font-weight: bold;
+button:hover::before {
+  transform: translate3d(-50%, -50%, 0) scale3d(15, 15, 15);
 }
 
+/* ========= CHAT PAGE ========= */
 .chat-header {
   display: flex;
   align-items: center;
@@ -73,4 +156,24 @@ button {
 .danger {
   background: #dc3545;
   color: white;
+}
+
+/* ========= TEXT FLICKER ANIMATION (Animista) ========= */
+.text-flicker-in-glow {
+  animation: text-flicker-in-glow 4s linear both;
+}
+
+@keyframes text-flicker-in-glow {
+  0%, 10%, 20%, 30%, 45%, 55%, 60.1%, 65%, 75.1%, 77%, 85.1%, 86% {
+    opacity: 0;
+    text-shadow: none;
+  }
+  10.1%, 20.1%, 30.1%, 45.1%, 50%, 55%, 57.1%, 60%, 65.1%, 75%, 77.1%, 85%, 86.1%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 30px rgba(255, 255, 255, 0.6),
+      0 0 60px rgba(255, 255, 255, 0.45),
+      0 0 110px rgba(255, 255, 255, 0.25),
+      0 0 100px rgba(255, 255, 255, 0.1);
+  }
 }
