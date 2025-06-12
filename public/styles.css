@@ -17,6 +17,20 @@ body {
   padding: 20px;
 }
 
+body.index-room-page {
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+}
+
+body.index-room-page .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 /* ========= INPUT WRAPPER ========= */
 .input-wrapper {
   width: 100%;
