@@ -11,9 +11,17 @@ body {
   font-family: sans-serif;
   overflow: hidden;
 }
+
 .container {
+  display: flex;              /* ✅ ทำให้ภายในจัดแบบแนวตั้ง */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   padding: 20px;
+  width: 100%;
+  max-width: 800px;           /* ✅ ป้องกันไม่ให้แชทกว้างเกิน */
+  height: 100%;
 }
 
 /* ========= INPUT WRAPPER ========= */
