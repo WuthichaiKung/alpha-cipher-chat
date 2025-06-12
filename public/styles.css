@@ -180,3 +180,50 @@ button:hover::before {
       0 0 100px rgba(255, 255, 255, 0.1);
   }
 }
+
+/* ========= TEXT ......... */
+
+.balls {
+  width: 3.5em;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.balls div {
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%;
+  background-color: #fc2f70;
+  transform: translateY(-100%);
+  animation: wave 0.8s ease-in-out alternate infinite;
+}
+
+.balls div:nth-of-type(1) {
+  animation-delay: -0.4s;
+}
+
+.balls div:nth-of-type(2) {
+  animation-delay: -0.2s;
+}
+
+@keyframes wave {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+#typingIndicator {
+  position: absolute;
+  bottom: 55px; /* ปรับให้แสดงด้านบนกล่องพิมพ์ */
+  left: 20px;
+  z-index: 2;
+}
+
+.chat-container {
+  position: relative;
+}
