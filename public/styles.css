@@ -255,12 +255,21 @@ button:hover::before {
 }
 
 .logo {
-  width: 80px; /* หรือขนาดตามที่เหมาะสม */
-  margin-bottom: 10px;
+  width: 160px;              /* ขยายให้พอดี */
+  max-width: 100%;           /* ไม่เกินขอบจอ */
+  height: auto;              /* รักษาอัตราส่วน */
+  margin-bottom: 20px;
   animation: fadeIn 1s ease-out;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2)); /* เพิ่มความเด่น */
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
