@@ -29,9 +29,25 @@ body.index-room-page .container {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  gap: 20px;
-  transform: translateY(-30px); /* ขยับขึ้นจากกึ่งกลางเล็กน้อย */
+  text-align: center;
 }
+
+/* ขยับเฉพาะส่วนบนขึ้น */
+.intro {
+  position: relative;
+  top: -30px;
+  margin-bottom: 10px;
+}
+
+/* INPUT WRAPPER */
+.input-wrapper {
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  position: relative;
+  display: block;
+}
+
 
 /* ========= INPUT WRAPPER ========= */
 .input-wrapper {
