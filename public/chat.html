@@ -12,6 +12,14 @@
     <button onclick="disconnect()" class="danger">Disconnect</button>
   </div>
   <div id="chatWindow" class="chat-window"></div>
+
+  <!-- Typing indicator -->
+  <div id="typingIndicator" style="display: none; justify-content: center; margin: 10px 0;" class="balls">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
   <div class="chat-input">
     <input type="text" id="messageInput" placeholder="Type a message..." />
     <button onclick="sendMessage()">➤</button>

@@ -1,5 +1,5 @@
 function generateRoomCode(length = 128) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:",.<>/?';
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\",.<>/?';
   let code = '';
   for (let i = 0; i < length; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -7,7 +7,6 @@ function generateRoomCode(length = 128) {
   return code;
 }
 
-// ✅ ตรวจสอบห้องก่อนเข้า
 async function joinRoom() {
   const room = document.getElementById('roomCodeInput').value.trim();
   if (!room) return alert('Please enter a room code.');
@@ -19,7 +18,6 @@ async function joinRoom() {
       alert('Room not found.');
       return;
     }
-
     window.location.href = `chat.html?mode=join&room=${encodeURIComponent(room)}`;
   } catch (e) {
     alert('Unable to check room status.');
@@ -31,7 +29,6 @@ function createRoom() {
   window.location.href = `chat.html?mode=create&room=${encodeURIComponent(room)}`;
 }
 
-// ==== Chat Page Logic ====
 if (location.pathname.endsWith('chat.html')) {
   const params = new URLSearchParams(location.search);
   const mode = params.get('mode');
@@ -40,6 +37,7 @@ if (location.pathname.endsWith('chat.html')) {
 
   let ws, aesKey;
   let username = mode === 'create' ? 'Alpha' : 'Delta';
+  let typingTimeout;
 
   async function deriveKey(pass) {
     const enc = new TextEncoder();
@@ -71,6 +69,7 @@ if (location.pathname.endsWith('chat.html')) {
     ws.onmessage = async (ev) => {
       if (typeof ev.data === 'string') {
         const msg = JSON.parse(ev.data);
+
         if (msg.type === 'ready') {
           addMessage('System', 'Peer connected');
         } else if (msg.type === 'message') {
@@ -81,6 +80,8 @@ if (location.pathname.endsWith('chat.html')) {
           addMessage(peerName, text);
         } else if (msg.type === 'peer-disconnected') {
           addMessage('System', 'Peer disconnected.');
+        } else if (msg.type === 'typing') {
+          showTypingIndicator();
         } else if (msg.type === 'error') {
           alert(msg.message);
           window.location.href = 'index.html';
@@ -100,6 +101,14 @@ if (location.pathname.endsWith('chat.html')) {
     div.textContent = `${sender}: ${text}`;
     win.append(div);
     win.scrollTop = win.scrollHeight;
+    hideTypingIndicator();
+  }
+
+  function showTypingIndicator() {
+    const el = document.getElementById('typingIndicator');
+    el.style.display = 'flex';
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(() => el.style.display = 'none', 2000);
   }
 
   async function sendMessage() {
@@ -127,8 +136,15 @@ if (location.pathname.endsWith('chat.html')) {
     window.location.href = 'index.html';
   }
 
+  function notifyTyping() {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'typing' }));
+    }
+  }
+
   document.getElementById('messageInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') sendMessage();
+    else notifyTyping();
   });
 
   document.querySelector('button[onclick="sendMessage()"]').onclick = sendMessage;
