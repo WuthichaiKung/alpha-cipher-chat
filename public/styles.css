@@ -30,6 +30,7 @@ body.index-room-page .container {
   align-items: center;
   height: 100vh;
   text-align: center;
+  gap: 15px; /* ระยะระหว่างแต่ละบล็อก */
 }
 
 /* ขยับเฉพาะส่วนบนขึ้น */
