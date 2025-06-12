@@ -255,12 +255,15 @@ button:hover::before {
 }
 
 .logo {
-  width: 160px;              /* ขยายให้พอดี */
-  max-width: 100%;           /* ไม่เกินขอบจอ */
-  height: auto;              /* รักษาอัตราส่วน */
+  width: 160px;
+  max-width: 100%;
+  height: auto;
   margin-bottom: 20px;
+  padding: 8px; /* เผื่อพื้นที่ให้พื้นหลัง */
+  background-color: rgba(255, 255, 255, 0.05); /* พื้นหลังอ่อนบาง */
+  border-radius: 12px; /* มุมโค้งนิดๆ */
   animation: fadeIn 1s ease-out;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2)); /* เพิ่มความเด่น */
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)); /* เพิ่มเงาให้ชัดขึ้น */
 }
 
 @keyframes fadeIn {
@@ -273,3 +276,4 @@ button:hover::before {
     transform: scale(1);
   }
 }
+
