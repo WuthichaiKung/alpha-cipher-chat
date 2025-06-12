@@ -29,15 +29,20 @@ body.index-room-page .container {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  gap: 15px; /* ช่องว่างระหว่างแต่ละส่วน */
   text-align: center;
-  gap: 15px; /* ระยะระหว่างแต่ละบล็อก */
 }
 
 /* ขยับเฉพาะส่วนบนขึ้น */
-.intro {
-  position: relative;
-  top: -30px;
-  margin-bottom: 10px; /* ลดจากเดิมที่อาจเป็น 20px หรือมากกว่านี้ */
+.logo {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.text-flicker-in-glow {
+  margin: 0;
+  padding: 0;
 }
 
 /* INPUT WRAPPER */
