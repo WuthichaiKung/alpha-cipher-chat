@@ -181,10 +181,23 @@ button:hover::before {
   }
 }
 
-/* ========= TEXT ......... */
+/* ========= TYPING INDICATOR ========= */
+#typingIndicator {
+  position: absolute;
+  bottom: 80px; /* ✅ ขยับขึ้นสูง */
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85em;
+  color: #fff;
+  white-space: nowrap;
+}
 
+/* ========= ANIMATED DOTS ========= */
 .balls {
-  width: 3.5em;
+  width: 2em; /* ✅ ลดขนาดรวม */
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -192,10 +205,10 @@ button:hover::before {
 }
 
 .balls div {
-  width: 0.8em;
-  height: 0.8em;
+  width: 0.35em; /* ✅ ลดขนาดจุด */
+  height: 0.35em;
   border-radius: 50%;
-  background-color: #fc2f70;
+  background-color: #ffffff;
   transform: translateY(-100%);
   animation: wave 0.8s ease-in-out alternate infinite;
 }
@@ -215,13 +228,6 @@ button:hover::before {
   to {
     transform: translateY(100%);
   }
-}
-
-#typingIndicator {
-  position: absolute;
-  bottom: 55px; /* ปรับให้แสดงด้านบนกล่องพิมพ์ */
-  left: 20px;
-  z-index: 2;
 }
 
 .chat-container {
