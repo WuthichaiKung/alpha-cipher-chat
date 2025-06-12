@@ -41,7 +41,6 @@ wss.on('connection', (ws) => {
         return;
       }
 
-      // ส่งข้อความไปยังอีกฝ่าย
       const peers = rooms.get(roomCode) || new Set();
       for (const client of peers) {
         if (client !== ws && client.readyState === client.OPEN) {
@@ -78,6 +77,12 @@ wss.on('connection', (ws) => {
 });
 
 app.use(express.static('public'));
+
+// ✅ เพิ่มส่วนนี้เพื่อให้เช็คห้องก่อน join ได้
+app.get('/check-room/:code', (req, res) => {
+  const code = req.params.code;
+  res.json({ exists: rooms.has(code) });
+});
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`));

@@ -1,5 +1,5 @@
 function generateRoomCode(length = 128) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\",.<>/?';
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:",.<>/?';
   let code = '';
   for (let i = 0; i < length; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -7,10 +7,23 @@ function generateRoomCode(length = 128) {
   return code;
 }
 
-function joinRoom() {
+// ✅ ตรวจสอบห้องก่อนเข้า
+async function joinRoom() {
   const room = document.getElementById('roomCodeInput').value.trim();
   if (!room) return alert('Please enter a room code.');
-  window.location.href = `chat.html?mode=join&room=${encodeURIComponent(room)}`;
+
+  try {
+    const res = await fetch(`/check-room/${encodeURIComponent(room)}`);
+    const json = await res.json();
+    if (!json.exists) {
+      alert('Room not found.');
+      return;
+    }
+
+    window.location.href = `chat.html?mode=join&room=${encodeURIComponent(room)}`;
+  } catch (e) {
+    alert('Unable to check room status.');
+  }
 }
 
 function createRoom() {
@@ -18,6 +31,7 @@ function createRoom() {
   window.location.href = `chat.html?mode=create&room=${encodeURIComponent(room)}`;
 }
 
+// ==== Chat Page Logic ====
 if (location.pathname.endsWith('chat.html')) {
   const params = new URLSearchParams(location.search);
   const mode = params.get('mode');
